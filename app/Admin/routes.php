@@ -11,4 +11,11 @@ Route::group([
 ], function (Router $router) {
     $router->get('/', 'HomeController@index');
     $router->get('users', 'UsersController@index');
+    // 商品路由 开始
+    $router->get('products', 'ProductsController@index');
+    $router->get('products/create', 'ProductsController@create');
+    $router->post('products', 'ProductsController@store');
+    $router->get('products/{id}/edit', 'ProductsController@edit');
+	$router->put('products/{id}', 'ProductsController@update');
+	// 商品路由 结束
 });
