@@ -10,12 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
-Route::get('products/{product}', 'ProductsController@show')->name('products.show');
-
-Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/email_verify_notice', 'PagesController@emailVerifyNotice')->name('email_verify_notice');
@@ -33,7 +30,11 @@ Route::group(['middleware' => 'auth'], function() {
         // 收藏和取消收藏
         Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor'); 
         Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+        // 收藏列表
+        Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
 	});
 });
+
+Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 
 
