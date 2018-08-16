@@ -9,6 +9,7 @@ use App\Models\Order;
 use Carbon\Carbon;
 use App\Exceptions\InternalException;
 use App\Jobs\CloseOrder;
+use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
@@ -64,9 +65,20 @@ class OrdersController extends Controller
 
             return $order;
         });
-        
+
         $this->dispatch(new CloseOrder($order, config('app.order_ttl')));
         return $order;
+    }
+
+    public function index(Request $request)
+    {
+        $orders = Order::query()
+            ->with(['items.product'], 'items.productSku')
+            ->where('user_id', $request->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        // dd($orders);
+        return view('orders.index', ['orders'=>$orders]);
     }
 
 }
