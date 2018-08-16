@@ -12,8 +12,9 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-
-    'name' => env('APP_NAME', 'Laravel'),
+    // 关闭未支付订单配置
+    'order_ttl' => 1800,
+    'name' => env('APP_NAME', 'Laravel Shop'),
 
     /*
     |--------------------------------------------------------------------------
