@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Order;
+use App\Events\OrderPaid;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidRequestException;
 
@@ -17,6 +18,7 @@ class PaymentController extends Controller
     	if($order->paid_at || $order->closed) {
     		throw new InvalidRequestException("订单状态不正确.");
     	}
+
     	// 调用支付宝的网页支付
     	return app('alipay')->web([
     		'out_trade_no' => $order->no, // 订单编号，需保证在商户端不重复
@@ -59,6 +61,13 @@ class PaymentController extends Controller
         	'payment_no'	 => $data->trade_no, // 支付宝订单
         ]);
 
+        // 触发事件
+        $this->afterPaid($order);
         return app('alipay')->success();
+    }
+
+    protected function afterPaid(Order $order)
+    {
+        event(new OrderPaid($order));
     }
 }
