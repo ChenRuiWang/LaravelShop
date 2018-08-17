@@ -18,4 +18,5 @@ Route::group([
     $router->get('products/{id}/edit', 'ProductsController@edit');
 	$router->put('products/{id}', 'ProductsController@update');
 	// 商品路由 结束
+    $router->get('orders', 'OrdersController@index')->name('admin.orders.index');
 });
