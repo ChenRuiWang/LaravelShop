@@ -38,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
         OrderReviewd::class => [
             UpdateProductRating::class,
         ],
+        OrderReviewd::class => [
+            UpdateProductRating::class,
+        ],
     ];
 
     /**
