@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
         Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
         Route::post('orders/{order}/apply_refund', 'OrdersController@applyRefund')->name('orders.apply_refund');
+        // 优惠券
+        Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
 	});
 });
 
