@@ -18,8 +18,17 @@ Route::group([
     $router->get('products/{id}/edit', 'ProductsController@edit');
 	$router->put('products/{id}', 'ProductsController@update');
 	// 商品路由 结束
+    // 订单路由 开始
     $router->get('orders', 'OrdersController@index')->name('admin.orders.index');
     $router->get('orders/{order}', 'OrdersController@detail')->name('admin.orders.detail');
     $router->post('orders/{order}/ship', 'OrdersController@ship')->name('admin.orders.ship');
     $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('admin.orders.handle_refund');
+    // 订单路由 结束
+    // 优惠券
+    $router->get('coupon_codes', 'CouponCodesController@index');
+    $router->post('coupon_codes', 'CouponCodesController@store');
+    $router->get('coupon_codes/create', 'CouponCodesController@create');
+    $router->get('coupon_codes/{id}/edit', 'CouponCodesController@edit');
+    $router->put('coupon_codes/{id}', 'CouponCodesController@update');
+    $router->delete('coupon_codes/{id}', 'CouponCodesController@destroy');
 });
